@@ -1,14 +1,15 @@
 using System;
 
 namespace Blockchain.Strategy.Mining {
-    public class ProofOfWorkStrategy : IStrategy {
-        public ProofOfWorkStrategy()
+    public class ProofOfWorkStrategy : StrategyBase, IStrategy {
+        public ProofOfWorkStrategy(int complexity = 2) : base(complexity)
         {
             Console.WriteLine("Proof of Work strategy chosen!");
         }
         
-        public void MineBlock(Block block) {
-            while (!block.Hash.StartsWith("00")) block.Nonce++;
+        public override void MineBlock(Block block) {
+            var leadingZeros = new String('0', Complexity);
+            while (!block.Hash.StartsWith(leadingZeros)) block.Nonce++;
         }
     }
 }
