@@ -14,7 +14,7 @@ namespace Blockchain.Test.ConsoleApp
             for (int i = 0; i < 10; i++)
             {
                 var data = new DataBlock($"{i+1}nth block in the chain");
-                var newBlock = blockchain.MineBlock(blockchain.Blocks[i].Hash, data, blockchain.Complexity);
+                var newBlock = blockchain.MineBlock(blockchain.Blocks[i].Hash, data);
                 blockchain.AddBlock(newBlock);
                 
                 Console.WriteLine(newBlock.ToString());
