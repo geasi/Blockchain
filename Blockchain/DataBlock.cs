@@ -1,5 +1,5 @@
 namespace Blockchain {
-    public class DataBlock : DataBlockBase
+    public class DataBlock : IDataBlock
     {
         public string Value { get; set; }
 

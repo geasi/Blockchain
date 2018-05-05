@@ -36,7 +36,7 @@ namespace Blockchain
             Blocks = blocks;
         }
 
-        public Block MineBlock(string lastHash, DataBlockBase data)
+        public Block MineBlock(string lastHash, IDataBlock data)
         {
             if (this.Blocks.Length > 0 && lastHash != this.Blocks[this.Blocks.Length - 1].Hash)
                 throw new ArgumentException("Invalid LastHash provided!");

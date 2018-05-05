@@ -12,18 +12,18 @@ namespace Blockchain
         }
         public string LastHash { get; set; }
         public long Timestamp { get; set; }
-        public DataBlockBase Data { get; set; }
+        public IDataBlock Data { get; set; }
         public long Nonce { get; set; }
         public int Complexity { get; set; }
 
-        public Block(string lastHash, DataBlockBase data, int complexity) {
+        public Block(string lastHash, IDataBlock data, int complexity) {
             this.LastHash = lastHash;
             this.Data = data;
             this.Timestamp = new DateTimeOffset(DateTime.Now).ToUnixTimeMilliseconds();
             this.Complexity = complexity;
         }
 
-        public static string GetHash(string lastHash, long timestamp, DataBlockBase data, int complexity, long nonce)
+        public static string GetHash(string lastHash, long timestamp, IDataBlock data, int complexity, long nonce)
         {
             return GetHash($"{lastHash}{timestamp}{data.ToString()}{complexity}{nonce}");
         }
