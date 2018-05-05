@@ -8,7 +8,7 @@ namespace Blockchain.Test.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var blockchain = new Chain(new ProofOfWorkStrategy(3));
+            var blockchain = new Chain(StrategyEnum.ProofOfWork, 3);
             Console.WriteLine(blockchain.Blocks[0].ToString());
 
             for (int i = 0; i < 10; i++)

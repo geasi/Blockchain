@@ -1,4 +1,5 @@
-namespace Blockchain.Strategy.Mining {
+namespace Blockchain.Strategy.Mining
+{
     public abstract class StrategyBase : IStrategy
     {
         public StrategyBase(int complexity)
@@ -10,13 +11,13 @@ namespace Blockchain.Strategy.Mining {
 
         public void DecreaseComplexity()
         {
-            if (this.Complexity >1) Complexity--;
+            if (this.Complexity > 1) Complexity--;
         }
         public void IncreaseComplexity()
         {
             Complexity++;
         }
 
-        public abstract void MineBlock(Block block);
+        public virtual void MineBlock(Block block) { }
     }
 }

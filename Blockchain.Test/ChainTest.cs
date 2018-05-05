@@ -8,19 +8,23 @@ namespace Blockchain.Test
     public class ChainTest
     {
         [Fact]
+        public void MustNotHaveStrategy()
+        {
+            var blockchain = new Chain();
+            Assert.Equal(blockchain.Strategy.GetType(), new NoStrategy().GetType());
+        }
+        
+        [Fact]
         public void MustMatchComplexity()
         {
-            var strategy = new ProofOfWorkStrategy(2);
-            var blockchain = new Chain(strategy);
-            
+            var blockchain = new Chain(StrategyEnum.ProofOfWork, 2);   
             Assert.Equal(2, blockchain.Complexity);
         }
         
         [Fact]
         public void MustIncreaseComplexity()
         {
-            var strategy = new ProofOfWorkStrategy(2);
-            var blockchain = new Chain(strategy);
+            var blockchain = new Chain(StrategyEnum.ProofOfWork, 2);
             blockchain.IncreaseComplexity();
 
             Assert.Equal(3, blockchain.Complexity);
@@ -29,8 +33,7 @@ namespace Blockchain.Test
         [Fact]
         public void MustDecreaseComplexity()
         {
-            var strategy = new ProofOfWorkStrategy(2);
-            var blockchain = new Chain(strategy);
+            var blockchain = new Chain(StrategyEnum.ProofOfWork, 2);
             blockchain.DecreaseComplexity();
 
             Assert.Equal(1, blockchain.Complexity);
@@ -39,8 +42,7 @@ namespace Blockchain.Test
         [Fact]
         public void MustAddBlock()
         {
-            var strategy = new ProofOfWorkStrategy(2);
-            var blockchain = new Chain(strategy);
+            var blockchain = new Chain(StrategyEnum.ProofOfWork, 2);
             
             var dataBlock = new DataBlock("first block");
             var block = blockchain.MineBlock(blockchain.LastHash, dataBlock);
@@ -53,8 +55,7 @@ namespace Blockchain.Test
         [Fact]
         public void MustPointToLastHash()
         {
-            var strategy = new ProofOfWorkStrategy(2);
-            var blockchain = new Chain(strategy);
+            var blockchain = new Chain(StrategyEnum.ProofOfWork, 2);
             
             var dataBlock = new DataBlock("first block");
             var block = blockchain.MineBlock(blockchain.LastHash, dataBlock);

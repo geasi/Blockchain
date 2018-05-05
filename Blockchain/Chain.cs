@@ -1,4 +1,5 @@
 using Blockchain.Strategy.Mining;
+using Blockchain.Strategy.Mining.Factory;
 using System;
 using System.Collections;
 using System.Text;
@@ -10,13 +11,13 @@ namespace Blockchain
         public Block[] Blocks { get; set; }
         public string LastHash => Blocks.Length > 0 ? Blocks[Blocks.Length - 1].Hash : null;
         public int Complexity {
-            get => _strategy == null ? 0 : _strategy.Complexity;
+            get => Strategy == null ? 0 : Strategy.Complexity;
         }
-        private IStrategy _strategy;
+        public IStrategy Strategy;
 
-        public Chain(IStrategy strategy = null)
+        public Chain(StrategyEnum strategyEnum = StrategyEnum.NoStrategy, int complexity = 0)
         {
-            _strategy = strategy ?? new ProofOfWorkStrategy();
+            Strategy = StrategyFactory.GetStrategy(strategyEnum, complexity);
 
             // initialize the chain
             Blocks = new Block[0];
@@ -42,7 +43,7 @@ namespace Blockchain
                 throw new ArgumentException("Invalid LastHash provided!");
 
             var block = new Block(lastHash, data, this.Complexity);
-            _strategy.MineBlock(block);
+            Strategy.MineBlock(block);
 
             return block;
         }
@@ -57,12 +58,12 @@ namespace Blockchain
 
         public void IncreaseComplexity()
         {
-            _strategy.IncreaseComplexity();
+            Strategy.IncreaseComplexity();
         }
 
         public void DecreaseComplexity()
         {
-            _strategy.DecreaseComplexity();
+            Strategy.DecreaseComplexity();
         }
     }
 }
