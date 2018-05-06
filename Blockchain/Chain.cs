@@ -10,10 +10,25 @@ namespace Blockchain
     {
         public Block[] Blocks { get; set; }
         public string LastHash => Blocks.Length > 0 ? Blocks[Blocks.Length - 1].Hash : null;
-        public int Complexity {
+        public int Complexity
+        {
             get => Strategy == null ? 0 : Strategy.Complexity;
         }
         public IStrategy Strategy;
+
+        protected Chain()
+        {
+            Strategy = StrategyFactory.GetStrategy(StrategyEnum.NoStrategy, 0);
+
+            // initialize the chain
+            Blocks = new Block[0];
+
+            // intialize the Genesis Block
+            var block = MineBlock(Block.GetHash("first-hash"), "Genesis block rocks!");
+
+            // add the Genesis Block
+            AddBlock(block);
+        }
 
         public Chain(StrategyEnum strategyEnum = StrategyEnum.NoStrategy, int complexity = 0)
         {
@@ -23,8 +38,7 @@ namespace Blockchain
             Blocks = new Block[0];
 
             // intialize the Genesis Block
-            var dataBlock = new DataBlock("Genesis block rocks!");
-            var block = MineBlock(Block.GetHash("first-hash"), dataBlock);
+            var block = MineBlock(Block.GetHash("first-hash"), "Genesis block rocks!");
 
             // add the Genesis Block
             AddBlock(block);
@@ -37,7 +51,7 @@ namespace Blockchain
             Blocks = blocks;
         }
 
-        public Block MineBlock(string lastHash, IDataBlock data)
+        public Block MineBlock(string lastHash, string data)
         {
             if (this.Blocks.Length > 0 && lastHash != this.Blocks[this.Blocks.Length - 1].Hash)
                 throw new ArgumentException("Invalid LastHash provided!");

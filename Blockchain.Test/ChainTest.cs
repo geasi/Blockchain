@@ -44,8 +44,7 @@ namespace Blockchain.Test
         {
             var blockchain = new Chain(StrategyEnum.ProofOfWork, 2);
             
-            var dataBlock = new DataBlock("first block");
-            var block = blockchain.MineBlock(blockchain.LastHash, dataBlock);
+            var block = blockchain.MineBlock(blockchain.LastHash, "first block");
             blockchain.AddBlock(block);
 
             Assert.Equal(blockchain.Blocks[blockchain.Blocks.Length - 1], block);
@@ -57,8 +56,7 @@ namespace Blockchain.Test
         {
             var blockchain = new Chain(StrategyEnum.ProofOfWork, 2);
             
-            var dataBlock = new DataBlock("first block");
-            var block = blockchain.MineBlock(blockchain.LastHash, dataBlock);
+            var block = blockchain.MineBlock(blockchain.LastHash, "first block");
             blockchain.AddBlock(block);
 
             Assert.Equal(blockchain.LastHash, block.Hash);

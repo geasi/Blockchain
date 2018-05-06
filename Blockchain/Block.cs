@@ -12,20 +12,20 @@ namespace Blockchain
         }
         public string LastHash { get; set; }
         public long Timestamp { get; set; }
-        public IDataBlock Data { get; set; }
+        public string Data { get; set; }
         public long Nonce { get; set; }
         public int Complexity { get; set; }
 
-        public Block(string lastHash, IDataBlock data, int complexity) {
+        public Block(string lastHash, string data, int complexity) {
             this.LastHash = lastHash;
             this.Data = data;
             this.Timestamp = new DateTimeOffset(DateTime.Now).ToUnixTimeMilliseconds();
             this.Complexity = complexity;
         }
 
-        public static string GetHash(string lastHash, long timestamp, IDataBlock data, int complexity, long nonce)
+        public static string GetHash(string lastHash, long timestamp, string data, int complexity, long nonce)
         {
-            return GetHash($"{lastHash}{timestamp}{data.ToString()}{complexity}{nonce}");
+            return GetHash($"{lastHash}{timestamp}{data}{complexity}{nonce}");
         }
 
         public static string GetHash(string input)
@@ -43,7 +43,7 @@ namespace Blockchain
 Last hash: {this.LastHash}
 Hash: {this.Hash}
 Timestamp: {this.Timestamp}
-Data: {this.Data.ToString()}
+Data: {this.Data}
 Complexity: {this.Complexity}
 Nonce: {this.Nonce}
 ";
